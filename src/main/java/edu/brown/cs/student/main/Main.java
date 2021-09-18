@@ -34,10 +34,13 @@ public final class Main {
    *
    * @param args An array of command line arguments
    */
+
+  //main method inputs an array of strings, "args"
   public static void main(String[] args) {
     new Main(args).run();
   }
 
+  //args is an array of strings
   private String[] args;
 
   private Main(String[] args) {
@@ -61,15 +64,52 @@ public final class Main {
     }
 
     // TODO: Add your REPL here!
+
+    //
     try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
       String input;
+      //while the BufferedReader is given a non-empty input
       while ((input = br.readLine()) != null) {
         try {
+          //eliminate leading and trailing spaces
           input = input.trim();
           String[] arguments = input.split(" ");
-          System.out.println(arguments[0]);
+          //define a variable for MathBot
+
           // TODO: complete your REPL by adding commands for addition "add" and subtraction
           //  "subtract"
+          int argsCount = arguments.length - 1;
+          MathBot mathBot = new MathBot();
+          switch (arguments[0]) {
+            case "add": //adds two numbers
+              if (arguments.length < 3) {
+                System.out.print("Error: not enough arguments");
+              } else {
+                try {
+                  Double firstNumber = Double.parseDouble(arguments[1]);
+                  Double secondNumber = Double.parseDouble(arguments[2]);
+                  System.out.println(mathBot.add(firstNumber, secondNumber));
+                } catch (Exception e) {
+                  System.out.println("Error: input invalid");
+                }
+              }
+              break;
+            case "subtract": //subtracts two numbers
+              if (arguments.length < 3) {
+                System.out.print("Error: not enough arguments");
+              } else {
+                try {
+                  Double firstNumber = Double.parseDouble(arguments[1]);
+                  Double secondNumber = Double.parseDouble(arguments[2]);
+                  System.out.println(mathBot.subtract(firstNumber, secondNumber));
+                } catch (Exception e) {
+                  System.out.print("Error: input invalid");
+                }
+              }
+              break;
+            default: System.out.println(arguments[0]);
+              break;
+          }
         } catch (Exception e) {
           // e.printStackTrace();
           System.out.println("ERROR: We couldn't process your input");
